@@ -51,6 +51,10 @@ export default defineConfig({
 				find: '@models',
 				replacement: path.resolve(__dirname, 'src/models'),
 			},
+			{
+				find: '@static',
+				replacement: path.resolve(__dirname, 'src/static'),
+			},
 		],
 	},
 });

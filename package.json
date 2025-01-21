@@ -19,14 +19,18 @@
 		"@mdi/react": "^1.6.1",
 		"@mui/icons-material": "^6.1.8",
 		"@mui/material": "^6.1.8",
-		"@react-keycloak/web": "^3.4.0",
+		"axios": "^1.7.9",
 		"keycloak-js": "^26.0.6",
+		"oidc-client-ts": "^3.1.0",
 		"react": "^18.3.1",
 		"react-dom": "^18.3.1",
-		"react-router": "^7.0.1"
+		"react-oidc-context": "^3.2.0",
+		"react-router": "^7.0.1",
+		"react-toastify": "^11.0.3"
 	},
 	"devDependencies": {
 		"@eslint/js": "^9.13.0",
+		"@types/node": "^22.10.7",
 		"@types/react": "^18.3.12",
 		"@types/react-dom": "^18.3.1",
 		"@vitejs/plugin-react": "^4.3.3",
@@ -37,6 +41,7 @@
 		"globals": "^15.11.0",
 		"postcss": "^8.4.49",
 		"prettier": "^3.3.3",
+		"storybook": "^8.4.6",
 		"tailwindcss": "^3.4.15",
 		"typescript": "~5.6.2",
 		"typescript-eslint": "^8.11.0",

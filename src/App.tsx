@@ -1,24 +1,15 @@
-import { useKeycloak } from '@react-keycloak/web';
-import { useCallback, useEffect } from 'react';
+import { useAuth } from 'react-oidc-context';
 import { BrowserRouter, Route, Routes } from 'react-router';
-import Loading from './components/Loading';
+import Loading from '@components/Loading';
 import './index.css';
-import Header from './static/Header';
+import Header from '@static/Header';
 
 function App() {
-	const { keycloak, initialized } = useKeycloak();
+	const { isLoading, isAuthenticated, error, signinRedirect } = useAuth();
 
-	const fetchUserInfo = useCallback(() => {
-		if (initialized && keycloak.authenticated) {
-			keycloak.loadUserInfo();
-		}
-	}, [initialized, keycloak]);
+	if (error) return <p>Erro: {error.message}</p>;
 
-	useEffect(() => {
-		fetchUserInfo();
-	}, [initialized, keycloak, fetchUserInfo]);
-
-	if (!initialized) {
+	if (isLoading) {
 		return (
 			<div className="min-h-screen">
 				<Loading />
@@ -26,19 +17,21 @@ function App() {
 		);
 	}
 
-	if (keycloak.authenticated)
+	if (isAuthenticated)
 		return (
-			<BrowserRouter>
-				<Header />
-				<Routes>
-					<Route path="/" element={<></>} />
-				</Routes>
-			</BrowserRouter>
-			// <Router>
-			// 	<div className="min-h-screen w-screen "></div>
-			// </Router>
+			<>
+				<BrowserRouter>
+					<Header />
+					<Routes>
+						<Route path="/" element={<></>} />
+					</Routes>
+				</BrowserRouter>
+				{/* <Router>
+					<div className="min-h-screen w-screen "></div>
+				</Router> */}
+			</>
 		);
-	else return <div>Redirecting to login...</div>;
+	else signinRedirect();
 }
 
 export default App;

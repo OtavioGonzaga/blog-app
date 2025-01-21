@@ -32,7 +32,8 @@
 			"@interfaces/*": ["src/models/interfaces/*"],
 			"@utils/*": ["./src/utils/*"],
 			"@assets/*": ["./src/assets/*"],
-			"@enums/*": ["./src/models/enums/*"]
+			"@enums/*": ["./src/models/enums/*"],
+			"@static/*": ["./src/static/*"]
 		}
 	},
 	"include": ["src"]
