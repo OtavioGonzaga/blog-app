@@ -3,16 +3,32 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-	--background: #0f152e;
+#root {
 	--primary: #ff2210;
 	--secondary: #1f46c1;
+	--background: #0f152e;
+	min-height: 100vh;
+}
+
+.dark {	
+	color: #fff;
+	background-color: #181A1B;
+	transition: .4s;
+}
+
+.light {
+	color: #000;
+	background-color: #fff;
+	transition: .8s;
+}
+
+.background-primary {
+	background-color: var(--background);
+	color: #fff;
 }
 
 * {
 	font-family: 'Geist Mono', monospace;
-	background-color: var(--background);
-	color: #fff;
 }
 
 .rubik {
