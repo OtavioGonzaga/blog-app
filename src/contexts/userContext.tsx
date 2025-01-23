@@ -9,6 +9,7 @@ import {
 } from 'react';
 import { useApi } from './apiContext';
 import ProfileService from '@services/profile.service';
+import { useAuth } from 'react-oidc-context';
 
 interface IUserContext {
 	user: User | undefined;
@@ -20,25 +21,34 @@ const UserContext = createContext<IUserContext>({
 	loading: false,
 });
 
-export function UserProvider({ children }: { children: ReactNode }) {
+export function UserProvider({ children }: Readonly<{ children: ReactNode }>) {
 	const api = useApi();
 	const profileService = useMemo(() => new ProfileService(api), [api]);
+
+	const { isAuthenticated } = useAuth();
 
 	const [user, setUser] = useState<User | undefined>(undefined);
 	const [loading, setLoading] = useState<boolean>(false);
 
 	useEffect(() => {
-		setLoading(true);
+		if (isAuthenticated) {
+			setLoading(true);
 
-		profileService.getUserProfile().then(({ data }) => {
-			setUser(data);
-		});
-	}, [profileService]);
+			profileService.getUserProfile().then(({ data }) => {
+				setUser(data);
+			});
+		}
+	}, [isAuthenticated, profileService]);
+
+	console.log(user);
+
+	const value = useMemo(
+		(): IUserContext => ({ user, loading }),
+		[loading, user],
+	);
 
 	return (
-		<UserContext.Provider value={{ user, loading }}>
-			{children}
-		</UserContext.Provider>
+		<UserContext.Provider value={value}>{children}</UserContext.Provider>
 	);
 }
 

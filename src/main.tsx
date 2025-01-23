@@ -1,9 +1,26 @@
+import './i18n';
+
+import oidcConfig from '@config/oidc.config';
+import { ApiProvider } from '@contexts/apiContext';
 import { ThemeProvider } from '@contexts/themeContext';
 import ReactDOM from 'react-dom/client';
 import { AuthProvider } from 'react-oidc-context';
+import { createBrowserRouter, RouterProvider } from 'react-router';
 import App from './App';
-import { ApiProvider } from '@contexts/apiContext';
-import oidcConfig from '@config/oidc.config';
+import { UserProvider } from './contexts/userContext';
+
+const routes = createBrowserRouter([
+	{
+		path: '/',
+		element: <App />,
+		children: [
+			{
+				path: '',
+				element: <h1>Home</h1>,
+			},
+		],
+	},
+]);
 
 const root = ReactDOM.createRoot(
 	document.getElementById('root') as HTMLElement,
@@ -11,9 +28,11 @@ const root = ReactDOM.createRoot(
 root.render(
 	<AuthProvider {...oidcConfig}>
 		<ApiProvider>
-			<ThemeProvider>
-				<App />
-			</ThemeProvider>
+			<UserProvider>
+				<ThemeProvider>
+					<RouterProvider router={routes} />
+				</ThemeProvider>
+			</UserProvider>
 		</ApiProvider>
 	</AuthProvider>,
 );
