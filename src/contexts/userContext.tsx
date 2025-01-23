@@ -40,8 +40,6 @@ export function UserProvider({ children }: Readonly<{ children: ReactNode }>) {
 		}
 	}, [isAuthenticated, profileService]);
 
-	console.log(user);
-
 	const value = useMemo(
 		(): IUserContext => ({ user, loading }),
 		[loading, user],

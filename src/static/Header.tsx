@@ -1,13 +1,17 @@
+import brazilFlag from '@assets/icons/brazil.png';
+import usaFlag from '@assets/icons/united-states.png';
 import { useTheme } from '@contexts/themeContext';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
 import {
-	ExitToAppOutlined,
+	ArrowForwardIosOutlined,
 	LightModeOutlined,
 	LogoutOutlined,
 	MoreVertOutlined,
 	NightsStayOutlined,
 	PersonOutline,
+	TranslateOutlined,
 } from '@mui/icons-material';
+import { changeLanguage } from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from 'react-oidc-context';
 import { useNavigate } from 'react-router';
@@ -16,7 +20,7 @@ export default function Header() {
 	const navigate = useNavigate();
 
 	const { theme, changeTheme } = useTheme();
-	const { t } = useTranslation();
+	const { t, i18n } = useTranslation();
 	const { signoutRedirect } = useAuth();
 
 	return (
@@ -30,6 +34,28 @@ export default function Header() {
 				className="flex items-center justify-end w-full px-4 py-2"
 			>
 				<div className="hidden md:flex space-x-4 w-full justify-end">
+					<button
+						onClick={() =>
+							changeLanguage(
+								i18n.language === 'pt-BR' ? 'en-US' : 'pt-BR',
+							)
+						}
+						className="cursor-pointer text-sm font-semibol px-4 py-2 rounded-md hover:text-secondary"
+					>
+						{i18n.language === 'pt-BR' ? (
+							<img
+								src={brazilFlag}
+								alt="brazil flag"
+								className="size-8 me-3"
+							/>
+						) : (
+							<img
+								src={usaFlag}
+								alt="united states flag"
+								className="size-8 me-3"
+							/>
+						)}
+					</button>
 					<button
 						onClick={() => changeTheme()}
 						className="cursor-pointer text-sm font-semibol px-4 py-2 rounded-md hover:text-secondary"
@@ -50,7 +76,7 @@ export default function Header() {
 						onClick={() => signoutRedirect()}
 						className="cursor-pointer text-sm font-semibold px-4 py-2 rounded-md hover:text-secondary"
 					>
-						<ExitToAppOutlined />
+						<LogoutOutlined />
 					</button>
 				</div>
 
@@ -74,6 +100,47 @@ export default function Header() {
 								)}
 								{t('theme.changeTheme')}
 							</button>
+						</MenuItem>
+						<MenuItem>
+							<Menu as="div">
+								<MenuButton className="w-full px-4 py-2 text-left text-sm data-[focus]:bg-gray-100 data-[focus]:text-background data-[focus]:outline-none flex justify-between hover:bg-gray-100 hover:text-background">
+									<span>
+										<TranslateOutlined />{' '}
+										{t('translate.translate')}
+									</span>
+									<ArrowForwardIosOutlined className="size-" />
+								</MenuButton>
+								<MenuItems className="absolute top-16 sm:right-24 lg:right-36 z-11 bg-background w-48 rounded-lg">
+									<MenuItem
+										as="div"
+										className="flex p-3 hover:bg-gray-100 hover:text-background"
+										onClick={() =>
+											i18n.changeLanguage('en-US')
+										}
+									>
+										<img
+											src={usaFlag}
+											alt="united states flag"
+											className="size-8 me-3"
+										/>
+										<span>English</span>
+									</MenuItem>
+									<MenuItem
+										as="div"
+										className="flex p-3 hover:bg-gray-100 hover:text-background"
+										onClick={() =>
+											i18n.changeLanguage('pt-BR')
+										}
+									>
+										<img
+											src={brazilFlag}
+											alt="brazil flag"
+											className="size-8 me-3"
+										/>
+										<span>Português</span>
+									</MenuItem>
+								</MenuItems>
+							</Menu>
 						</MenuItem>
 						<MenuItem>
 							<button
