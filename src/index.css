@@ -10,16 +10,16 @@
 	min-height: 100vh;
 }
 
-.dark {	
+.dark {
 	color: #fff;
-	background-color: #181A1B;
-	transition: .4s;
+	background-color: #181a1b;
+	transition: 0.4s;
 }
 
 .light {
 	color: #000;
 	background-color: #fff;
-	transition: .8s;
+	transition: 0.8s;
 }
 
 .background-primary {

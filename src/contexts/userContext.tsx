@@ -2,6 +2,7 @@ import User from '@interfaces/users/user.interface';
 import {
 	createContext,
 	ReactNode,
+	useCallback,
 	useContext,
 	useEffect,
 	useMemo,
@@ -14,11 +15,15 @@ import { useAuth } from 'react-oidc-context';
 interface IUserContext {
 	user: User | undefined;
 	loading: boolean;
+	uploadPicture: (picture: File) => Promise<void>;
 }
 
 const UserContext = createContext<IUserContext>({
 	user: undefined,
 	loading: false,
+	uploadPicture: async () => {
+		return;
+	},
 });
 
 export function UserProvider({ children }: Readonly<{ children: ReactNode }>) {
@@ -30,28 +35,48 @@ export function UserProvider({ children }: Readonly<{ children: ReactNode }>) {
 	const [user, setUser] = useState<User | undefined>(undefined);
 	const [loading, setLoading] = useState<boolean>(false);
 
+	const getUserProfile = useCallback(async () => {
+		setLoading(true);
+
+		try {
+			await profileService.getUserProfile().then(({ data }) => {
+				setUser(data);
+			});
+		} catch (error) {
+			// TODO: toast error message
+			console.error(error);
+		} finally {
+			setLoading(false);
+		}
+	}, [profileService]);
+
+	const uploadPicture = useCallback(
+		async (picture: File) => {
+			try {
+				await profileService.uploadPicture(picture);
+
+				getUserProfile();
+			} catch (error) {
+				// TODO: toast error message
+				console.error(error);
+			}
+		},
+		[getUserProfile, profileService],
+	);
+
 	useEffect(() => {
 		if (isAuthenticated) {
-			setLoading(true);
-
-			setTimeout(
-				() =>
-					profileService
-						.getUserProfile()
-						.then(({ data }) => {
-							setUser(data);
-						})
-						.finally(() => {
-							setLoading(false);
-						}),
-				2000,
-			);
+			getUserProfile();
 		}
-	}, [isAuthenticated, profileService]);
+	}, [getUserProfile, isAuthenticated]);
 
 	const value = useMemo(
-		(): IUserContext => ({ user, loading }),
-		[loading, user],
+		(): IUserContext => ({
+			user,
+			loading,
+			uploadPicture,
+		}),
+		[loading, user, uploadPicture],
 	);
 
 	return (

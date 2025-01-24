@@ -28,7 +28,7 @@ export default function Header() {
 	const { user, loading } = useUser();
 
 	return (
-		<header className="px-16 sm:px-24 lg:px-36 py-4 sticky top-0 z-1 flex justify-between items-center background-primary">
+		<header className="px-16 sm:px-24 lg:px-36 sticky top-0 z-1 flex justify-between items-center background-primary">
 			<button onClick={() => navigate('/')}>
 				<h1 className="font-bold text-primary text-2xl">blog</h1>
 			</button>
@@ -77,6 +77,7 @@ export default function Header() {
 									name={user?.name ?? ''}
 									loading={loading}
 									pictureUrl={user?.pictureUrl}
+									className="size-12"
 								/>
 							</MenuButton>
 							<MenuItems className="absolute bg-background w-40 right-40 border rounded-md">

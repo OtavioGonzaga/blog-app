@@ -9,6 +9,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router';
 import App from './App';
 import { UserProvider } from './contexts/userContext';
 import PrivateRoutes from './routes/privateRoutes';
+import Account from '@pages/account';
 
 const routes = createBrowserRouter([
 	{
@@ -20,7 +21,7 @@ const routes = createBrowserRouter([
 				children: [
 					{
 						path: '/account',
-						element: <h1>Account</h1>,
+						element: <Account />,
 					},
 				],
 			},

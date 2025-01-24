@@ -7,9 +7,8 @@ export default {
 				primary: '#ff2210',
 				secondary: '#1f46c1',
 				background: '#0f152e',
-			  }
+			},
 		},
-
 	},
 	plugins: [],
 };

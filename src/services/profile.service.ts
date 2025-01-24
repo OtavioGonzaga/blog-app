@@ -12,4 +12,11 @@ export default class ProfileService {
 	getUserProfile() {
 		return this.api.get<User>(`${this.baseUrl}`);
 	}
+
+	uploadPicture(picture: File) {
+		const formData = new FormData();
+		formData.append('picture', picture);
+
+		return this.api.post(`${this.baseUrl}/picture`, formData);
+	}
 }
