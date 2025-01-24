@@ -34,9 +34,18 @@ export function UserProvider({ children }: Readonly<{ children: ReactNode }>) {
 		if (isAuthenticated) {
 			setLoading(true);
 
-			profileService.getUserProfile().then(({ data }) => {
-				setUser(data);
-			});
+			setTimeout(
+				() =>
+					profileService
+						.getUserProfile()
+						.then(({ data }) => {
+							setUser(data);
+						})
+						.finally(() => {
+							setLoading(false);
+						}),
+				2000,
+			);
 		}
 	}, [isAuthenticated, profileService]);
 

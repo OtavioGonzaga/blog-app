@@ -7,6 +7,7 @@ const enUsTranslations: ITranslations = {
 		account: {
 			account: 'Account',
 			logout: 'Logout',
+			signin: 'Sign in',
 		},
 	},
 };

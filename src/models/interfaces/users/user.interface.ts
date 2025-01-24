@@ -7,4 +7,5 @@ export default interface User {
 	email: string;
 	username: string;
 	role: UserRoles;
+	pictureUrl?: string;
 }

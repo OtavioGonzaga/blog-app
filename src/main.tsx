@@ -8,12 +8,22 @@ import { AuthProvider } from 'react-oidc-context';
 import { createBrowserRouter, RouterProvider } from 'react-router';
 import App from './App';
 import { UserProvider } from './contexts/userContext';
+import PrivateRoutes from './routes/privateRoutes';
 
 const routes = createBrowserRouter([
 	{
 		path: '/',
 		element: <App />,
 		children: [
+			{
+				element: <PrivateRoutes />,
+				children: [
+					{
+						path: '/account',
+						element: <h1>Account</h1>,
+					},
+				],
+			},
 			{
 				path: '',
 				element: <h1>Home</h1>,

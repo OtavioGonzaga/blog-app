@@ -9,6 +9,7 @@ export default interface ITranslations extends ResourceLanguage {
 		account: {
 			account: string;
 			logout: string;
+			signin: string;
 		};
 	};
 }

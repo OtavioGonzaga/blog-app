@@ -7,6 +7,7 @@ const ptBrTranslations: ITranslations = {
 		account: {
 			account: 'Conta',
 			logout: 'Sair',
+			signin: 'Entrar',
 		},
 	},
 };

@@ -5,26 +5,24 @@ import Header from '@static/Header';
 import { Outlet } from 'react-router';
 
 function App() {
-	const { isLoading, isAuthenticated, error, signinRedirect } = useAuth();
+	const { isLoading, error } = useAuth();
 
 	if (error) return <p>Erro: {error.message}</p>;
 
 	if (isLoading) {
 		return (
-			<div className="min-h-screen text-secondary">
+			<div className="h-screen w-full text-secondary">
 				<Loading />
 			</div>
 		);
 	}
 
-	if (!isAuthenticated) {
-		signinRedirect();
-	}
-
 	return (
 		<>
 			<Header />
-			<Outlet />
+			<main className="px-16 sm:px-24 lg:px-36 py-4">
+				<Outlet />
+			</main>
 		</>
 	);
 }
