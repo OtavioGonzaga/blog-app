@@ -3,7 +3,6 @@ import { mdiLoading } from '@mdi/js';
 
 interface LoadingProps extends React.HTMLAttributes<HTMLDivElement> {
 	size?: number;
-	colors?: boolean;
 }
 
 export default function Loading({
