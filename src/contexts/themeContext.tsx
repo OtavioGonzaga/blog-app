@@ -1,8 +1,10 @@
 import {
 	createContext,
 	ReactNode,
+	useCallback,
 	useContext,
 	useEffect,
+	useMemo,
 	useState,
 } from 'react';
 
@@ -18,26 +20,32 @@ const ThemeContext = createContext<IThemeContext>({
 	changeTheme: () => {},
 });
 
-export function ThemeProvider({ children }: { children: ReactNode }) {
+export function ThemeProvider({ children }: Readonly<{ children: ReactNode }>) {
 	const [theme, setTheme] = useState<'dark' | 'light'>(
 		window.matchMedia('(prefers-color-scheme: dark)').matches
 			? 'dark'
 			: 'light',
 	);
 
-	function changeTheme() {
+	const changeTheme = useCallback(() => {
 		setTheme(theme === 'dark' ? 'light' : 'dark');
-	}
-
-	useEffect(() => {
-		document.getElementById('root')?.classList.remove('dark', 'light');
-		document.getElementById('root')?.classList.add(theme);
 	}, [theme]);
 
+	useEffect(() => {
+		document.querySelector('html')?.classList.remove('dark', 'light');
+		document.querySelector('html')?.classList.add(theme);
+	}, [theme]);
+
+	const value = useMemo(
+		() => ({
+			theme,
+			changeTheme,
+		}),
+		[changeTheme, theme],
+	);
+
 	return (
-		<ThemeContext.Provider value={{ theme, changeTheme }}>
-			{children}
-		</ThemeContext.Provider>
+		<ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
 	);
 }
 

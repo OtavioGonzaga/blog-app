@@ -11,8 +11,8 @@ function App() {
 
 	if (isLoading) {
 		return (
-			<div className="h-screen w-full text-secondary">
-				<Loading />
+			<div className="h-screen w-full text-secondary flex justify-center">
+				<Loading colors />
 			</div>
 		);
 	}
@@ -20,7 +20,7 @@ function App() {
 	return (
 		<>
 			<Header />
-			<main className="px-16 sm:px-24 lg:px-36 py-4">
+			<main className="px-8 sm:px-24 lg:px-32 xl:px-64 py-4">
 				<Outlet />
 			</main>
 		</>

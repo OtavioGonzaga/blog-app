@@ -8,6 +8,7 @@ const ptBrTranslations: ITranslations = {
 			account: 'Conta',
 			logout: 'Sair',
 			signin: 'Entrar',
+			create: 'Criar conta',
 		},
 	},
 };

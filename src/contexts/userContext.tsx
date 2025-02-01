@@ -52,6 +52,7 @@ export function UserProvider({ children }: Readonly<{ children: ReactNode }>) {
 
 	const uploadPicture = useCallback(
 		async (picture: File) => {
+			setLoading(true);
 			try {
 				await profileService.uploadPicture(picture);
 
@@ -59,6 +60,8 @@ export function UserProvider({ children }: Readonly<{ children: ReactNode }>) {
 			} catch (error) {
 				// TODO: toast error message
 				console.error(error);
+			} finally {
+				setLoading(false);
 			}
 		},
 		[getUserProfile, profileService],

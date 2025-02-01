@@ -8,6 +8,7 @@ const enUsTranslations: ITranslations = {
 			account: 'Account',
 			logout: 'Logout',
 			signin: 'Sign in',
+			create: 'Create account',
 		},
 	},
 };

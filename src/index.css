@@ -3,10 +3,13 @@
 @tailwind components;
 @tailwind utilities;
 
-#root {
+#root, #headlessui-portal-root {
 	--primary: #ff2210;
 	--secondary: #1f46c1;
 	--background: #0f152e;
+}
+
+#root {
 	min-height: 100vh;
 }
 
