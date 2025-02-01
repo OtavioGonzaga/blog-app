@@ -12,7 +12,7 @@ function App() {
 	if (isLoading) {
 		return (
 			<div className="h-screen w-full text-secondary flex justify-center">
-				<Loading colors />
+				<Loading />
 			</div>
 		);
 	}

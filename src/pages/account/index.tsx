@@ -1,6 +1,6 @@
-import Avatar from '@/components/Avatar';
-import Loading from '@/components/Loading';
-import { useUser } from '@/contexts/userContext';
+import Avatar from '@components/Avatar';
+import Loading from '@components/Loading';
+import { useUser } from '@contexts/userContext';
 import { ChangeEventHandler } from 'react';
 
 export default function Account() {
