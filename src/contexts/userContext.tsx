@@ -1,4 +1,6 @@
 import User from '@interfaces/users/user.interface';
+import ProfileService from '@services/profile.service';
+import { successToast, toastErrorMessage } from '@utils/toasts';
 import {
 	createContext,
 	ReactNode,
@@ -8,9 +10,9 @@ import {
 	useMemo,
 	useState,
 } from 'react';
-import { useApi } from './apiContext';
-import ProfileService from '@services/profile.service';
 import { useAuth } from 'react-oidc-context';
+import { useApi } from './apiContext';
+import { useTranslation } from 'react-i18next';
 
 interface IUserContext {
 	user: User | undefined;
@@ -39,6 +41,7 @@ export function UserProvider({ children }: Readonly<{ children: ReactNode }>) {
 	const profileService = useMemo(() => new ProfileService(api), [api]);
 
 	const { isAuthenticated } = useAuth();
+	const { t } = useTranslation();
 
 	const [user, setUser] = useState<User | undefined>(undefined);
 	const [loading, setLoading] = useState<boolean>(false);
@@ -51,8 +54,7 @@ export function UserProvider({ children }: Readonly<{ children: ReactNode }>) {
 				setUser(data);
 			});
 		} catch (error) {
-			// TODO: toast error message
-			console.error(error);
+			toastErrorMessage(error);
 		} finally {
 			setLoading(false);
 		}
@@ -64,15 +66,18 @@ export function UserProvider({ children }: Readonly<{ children: ReactNode }>) {
 			try {
 				await profileService.uploadPicture(picture);
 
+				successToast(
+					t('toasts.XChanged', { x: t('user.profilePicture') }),
+				);
+
 				getUserProfile();
 			} catch (error) {
-				// TODO: toast error message
-				console.error(error);
+				toastErrorMessage(error);
 			} finally {
 				setLoading(false);
 			}
 		},
-		[getUserProfile, profileService],
+		[getUserProfile, profileService, t],
 	);
 
 	const deletePicture = useCallback(async () => {
@@ -80,30 +85,31 @@ export function UserProvider({ children }: Readonly<{ children: ReactNode }>) {
 		try {
 			await profileService.deletePicture();
 
+			successToast(t('toasts.XDeleted', { x: t('user.profilePicture') }));
+
 			await getUserProfile();
 		} catch (error) {
-			// TODO: toast error message
-			console.error(error);
+			toastErrorMessage(error);
 		} finally {
 			setLoading(false);
 		}
-	}, [getUserProfile, profileService]);
+	}, [getUserProfile, profileService, t]);
 
 	const updateProfile = useCallback(
 		async (updatedUser: Pick<User, 'name'>) => {
 			try {
 				await profileService.updateProfile(updatedUser);
 
-				getUserProfile();
-			} catch (error) {
-				// TODO: toast error message
+				successToast(t('toasts.XChanged', { x: t('user.name') }));
 
-				console.error(error);
+				await getUserProfile();
+			} catch (error) {
+				toastErrorMessage(error);
 			} finally {
 				setLoading(false);
 			}
 		},
-		[getUserProfile, profileService],
+		[getUserProfile, profileService, t],
 	);
 
 	useEffect(() => {
