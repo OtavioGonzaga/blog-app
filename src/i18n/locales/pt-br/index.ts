@@ -10,6 +10,14 @@ const ptBrTranslations: ITranslations = {
 			signin: 'Entrar',
 			create: 'Criar conta',
 		},
+		actions: {
+			cancel: 'Cancelar',
+			changeX: 'Alterar {{x}}',
+		},
+		user: {
+			name: 'Nome',
+			email: 'E-mail',
+		},
 	},
 };
 

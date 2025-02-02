@@ -10,6 +10,14 @@ const enUsTranslations: ITranslations = {
 			signin: 'Sign in',
 			create: 'Create account',
 		},
+		actions: {
+			cancel: 'Cancel',
+			changeX: 'Change {{x}}',
+		},
+		user: {
+			name: 'Name',
+			email: 'Email',
+		},
 	},
 };
 

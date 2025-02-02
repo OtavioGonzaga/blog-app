@@ -12,5 +12,13 @@ export default interface ITranslations extends ResourceLanguage {
 			signin: string;
 			create: string;
 		};
+		actions: {
+			cancel: string;
+			changeX: string;
+		};
+		user: {
+			name: string;
+			email: string;
+		};
 	};
 }
