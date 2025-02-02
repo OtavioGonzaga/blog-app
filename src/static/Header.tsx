@@ -78,7 +78,6 @@ export default function Header() {
 									name={user?.name ?? ''}
 									loading={loading}
 									pictureUrl={user?.pictureUrl}
-									className="size-12"
 								/>
 							</MenuButton>
 							<MenuItems className="absolute bg-background w-40 right-40 border rounded-md">
@@ -105,7 +104,7 @@ export default function Header() {
 					) : (
 						<>
 							<Button
-								variant="outiline"
+								variant="outline"
 								onClick={() => signinRedirect()}
 							>
 								{t('account.signin')}
@@ -124,7 +123,6 @@ export default function Header() {
 					<MenuOutlined />
 				</MenuButton>
 				<MenuItems
-					as="div"
 					transition
 					className="absolute top-10 sm:right-24 lg:right-36 mt-2 w-56 origin-top-right rounded-md shadow-2xl transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in background-primary md:hidden border"
 				>

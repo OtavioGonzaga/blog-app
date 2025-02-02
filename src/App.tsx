@@ -11,7 +11,7 @@ function App() {
 
 	if (isLoading) {
 		return (
-			<div className="h-screen w-full text-secondary flex justify-center">
+			<div className="h-screen w-full text-secondary">
 				<Loading />
 			</div>
 		);
