@@ -10,7 +10,7 @@ const api = axios.create({
 const ApiContext = createContext<AxiosInstance>(api);
 
 export function ApiProvider({ children }: Readonly<{ children: ReactNode }>) {
-	const { user } = useAuth();
+	const { user, revokeTokens, signinRedirect } = useAuth();
 	const { i18n } = useTranslation();
 
 	api.interceptors.request.use((config) => {
@@ -23,6 +23,27 @@ export function ApiProvider({ children }: Readonly<{ children: ReactNode }>) {
 		config.headers['x-custom-lang'] = i18n.language ?? 'pt-BR';
 
 		return config;
+	});
+
+	api.interceptors.response.use(undefined, async (error) => {
+		if (error.response && error.response.status === 401) {
+			try {
+				if (error.config.retry) {
+					throw error;
+				}
+
+				await revokeTokens();
+
+				const retryConfig = { ...error.config, retry: true };
+				const retryResponse = await api(retryConfig);
+
+				return retryResponse;
+			} catch {
+				signinRedirect();
+			}
+		}
+
+		throw error;
 	});
 
 	return <ApiContext.Provider value={api}>{children}</ApiContext.Provider>;
