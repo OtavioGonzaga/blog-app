@@ -17,6 +17,14 @@ const ptBrTranslations: ITranslations = {
 		user: {
 			name: 'Nome',
 			email: 'E-mail',
+			profilePicture: 'Foto de perfil',
+		},
+		errors: {
+			defaultError: 'Ocorreu um erro',
+		},
+		toasts: {
+			XChanged: '{{x}} alterado(a)',
+			XDeleted: '{{x}} deletado(a)',
 		},
 	},
 };

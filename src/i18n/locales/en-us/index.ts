@@ -17,6 +17,14 @@ const enUsTranslations: ITranslations = {
 		user: {
 			name: 'Name',
 			email: 'Email',
+			profilePicture: 'Profile picture',
+		},
+		errors: {
+			defaultError: 'An error occurred',
+		},
+		toasts: {
+			XChanged: '{{x}} changed',
+			XDeleted: '{{x}} deleted',
 		},
 	},
 };

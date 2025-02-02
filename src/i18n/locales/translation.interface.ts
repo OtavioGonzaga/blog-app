@@ -19,6 +19,14 @@ export default interface ITranslations extends ResourceLanguage {
 		user: {
 			name: string;
 			email: string;
+			profilePicture: string;
+		};
+		errors: {
+			defaultError: string;
+		};
+		toasts: {
+			XChanged: string;
+			XDeleted: string;
 		};
 	};
 }
