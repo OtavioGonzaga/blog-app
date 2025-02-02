@@ -1,7 +1,8 @@
 import Icon from '@mdi/react';
 import { mdiLoading } from '@mdi/js';
+import { HTMLAttributes } from 'react';
 
-interface LoadingProps extends React.HTMLAttributes<HTMLDivElement> {
+interface LoadingProps extends HTMLAttributes<HTMLDivElement> {
 	size?: number;
 }
 
@@ -12,7 +13,7 @@ export default function Loading({
 }: Readonly<LoadingProps>) {
 	return (
 		<div
-			className={`flex justify-center items-center transition ${className}`}
+			className={`cursor-wait flex justify-center items-center transition w-full h-full ${className}`}
 			{...props}
 		>
 			<Icon path={mdiLoading} size={size} spin={0.8} />

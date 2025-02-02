@@ -16,12 +16,20 @@ interface IUserContext {
 	user: User | undefined;
 	loading: boolean;
 	uploadPicture: (picture: File) => Promise<void>;
+	deletePicture: () => Promise<void>;
+	updateProfile: (updatedUser: Pick<User, 'name'>) => Promise<void>;
 }
 
 const UserContext = createContext<IUserContext>({
 	user: undefined,
 	loading: false,
 	uploadPicture: async () => {
+		return;
+	},
+	deletePicture: async () => {
+		return;
+	},
+	updateProfile: async () => {
 		return;
 	},
 });
@@ -67,6 +75,37 @@ export function UserProvider({ children }: Readonly<{ children: ReactNode }>) {
 		[getUserProfile, profileService],
 	);
 
+	const deletePicture = useCallback(async () => {
+		setLoading(true);
+		try {
+			await profileService.deletePicture();
+
+			await getUserProfile();
+		} catch (error) {
+			// TODO: toast error message
+			console.error(error);
+		} finally {
+			setLoading(false);
+		}
+	}, [getUserProfile, profileService]);
+
+	const updateProfile = useCallback(
+		async (updatedUser: Pick<User, 'name'>) => {
+			try {
+				await profileService.updateProfile(updatedUser);
+
+				getUserProfile();
+			} catch (error) {
+				// TODO: toast error message
+
+				console.error(error);
+			} finally {
+				setLoading(false);
+			}
+		},
+		[getUserProfile, profileService],
+	);
+
 	useEffect(() => {
 		if (isAuthenticated) {
 			getUserProfile();
@@ -78,8 +117,10 @@ export function UserProvider({ children }: Readonly<{ children: ReactNode }>) {
 			user,
 			loading,
 			uploadPicture,
+			deletePicture,
+			updateProfile,
 		}),
-		[loading, user, uploadPicture],
+		[user, loading, uploadPicture, deletePicture, updateProfile],
 	);
 
 	return (

@@ -6,12 +6,13 @@ const oidcConfig: AuthProviderProps = {
 	client_id: import.meta.env.VITE_KEYCLOAK_CLIENT_ID,
 	redirect_uri: window.location.origin,
 	post_logout_redirect_uri: window.location.origin,
-	response_type: 'code',
-	scope: 'openid profile email',
 	automaticSilentRenew: true,
 	loadUserInfo: true,
 	stateStore: new WebStorageStateStore({
 		prefix: 'token',
+		store: window.localStorage,
+	}),
+	userStore: new WebStorageStateStore({
 		store: window.localStorage,
 	}),
 	onRemoveUser: () => {
